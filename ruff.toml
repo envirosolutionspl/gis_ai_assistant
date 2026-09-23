@@ -1,0 +1,15 @@
+# Standard kodu wtyczki: ruff check .
+line-length = 120
+target-version = "py39"
+
+[lint]
+select = ["E", "F", "W", "B", "N"]
+ignore = [
+    "N802",  # nazwy metod Qt (initGui, eventFilter…) muszą zachować camelCase
+    "N815",  # sygnały Qt w camelCase (waitingForUser…)
+    "B008",
+]
+
+[lint.per-file-ignores]
+"tests/*" = ["N"]
+"prompts.py" = ["E501"]  # treść instrukcji dla modelu – łamanie linii zmieniałoby tekst promptu

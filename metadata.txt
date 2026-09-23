@@ -1,0 +1,64 @@
+[general]
+name=GIS Assistant AI
+qgisMinimumVersion=3.34
+qgisMaximumVersion=4.99
+description=PL: GIS Assistant AI to asystent AI dla QGIS: opisz zadanie językiem naturalnym, a wtyczka wskaże narzędzie albo przygotuje i wykona plan działań krok po kroku. EN: AI assistant for QGIS – describe a task in plain language and get the right tool or an executable step-by-step plan.
+version=0.4.3
+author=EnviroSolutions Sp. z o.o.
+email=gis@envirosolutions.pl
+
+about=Wtyczka dodaje panel z linią poleceń, w której opisujesz, co chcesz zrobić w QGIS
+  (np. „Stwórz bufor 100 m od szkół w powiecie piaseczyńskim”).
+  * Proste pytania – wskazanie narzędzia/algorytmu wraz ze ścieżką w menu lub linkiem do wtyczki z repozytorium QGIS.
+  * Zadania – dokładny plan działań krok po kroku, który po kliknięciu „WYKONAJ” jest realizowany automatycznie
+    (algorytmy Processing, wczytywanie usług WMS/WFS/XYZ, granice jednostek z ULDK GUGiK).
+  * Kroki wymagające Twojej decyzji (np. podłączenie usługi, pobranie paczki BDOT10k) wstrzymują plan
+    i czekają na potwierdzenie, po czym plan jest automatycznie dopasowywany do wczytanych danych.
+  * Obsługiwane modele: Anthropic Claude, OpenAI (i API zgodne z OpenAI), Ollama (lokalnie, bez wysyłania danych).
+  Klucz API przechowywany jest w zaszyfrowanym menedżerze uwierzytelniania QGIS. Do modelu wysyłany jest
+  wyłącznie opis projektu (nazwy warstw, pola, układy) – bez haseł, tokenów i pełnych ścieżek dysków.
+  EN: Natural-language assistant that suggests tools or builds and executes step-by-step processing plans.
+
+tracker=https://github.com/envirosolutionspl/gis_assistant_ai/issues
+repository=https://github.com/envirosolutionspl/gis_assistant_ai
+homepage=https://envirosolutions.pl/systemy-opensource-gis/
+
+tags=ai, llm, assistant, asystent, chat, claude, openai, ollama, processing, automation, gugik, bdot10k, uldk, polska, poland, envirosolutions, qgis4
+category=Plugins
+icon=img/icon.png
+experimental=True
+deprecated=False
+server=False
+hasProcessingProvider=no
+supportsQt6=True
+
+changelog=0.4.3 – PL: poprawny operator TYPE_MULTI_REQUEST dla QuickOSM; puste parametry opcjonalne pomijane; model widzi, które parametry wtyczek są opcjonalne. EN: fixed QuickOSM TYPE_MULTI_REQUEST operator; blank optional parameters are skipped; optional plugin parameters are marked for the model.
+  0.4.2 – PL: algorytmy wtyczek (np. QuickOSM) przekazywane modelowi z listy zainstalowanych – koniec zgadywania nazw; poprawianie przekręconych identyfikatorów; czytelne komunikaty o brakującej wtyczce. EN: plugin algorithms (e.g. QuickOSM) are passed to the model from the installed list; misspelled IDs are corrected; clear messages about missing plugins.
+  0.4.1 – PL: suwak w panelu, gdy okno jest niższe niż zawartość (przycisk WYKONAJ i Dziennik zawsze osiągalne). EN: the panel scrolls when the window is shorter than its content.
+  0.4.0 – poprawki z przeglądu kodu / code review fixes:
+  PL: odpowiedzi AI przesyłane strumieniowo (koniec przerywania po 60 s, podgląd postępu); spóźnione
+  odpowiedzi po „Zatrzymaj” nie przesuwają nowego planu; otwierane są tylko adresy http(s); kod PyQGIS
+  widoczny w oknie zatwierdzania z ostrzeżeniami i domyślnie wyłączony; wczytanie lokalnego pliku lub bazy
+  wymaga zgody; ostrzeżenie o kluczu API przez http://; usunięty wbudowany identyfikator workspace;
+  poprawki stabilności (zoom, okno algorytmu, OpenAI max_completion_tokens, QGIS 3.34–3.36); testy
+  jednostkowe i konfiguracja lintera.
+  EN: streamed AI responses (no more 60 s network timeout, progress shown); late responses after Stop no
+  longer advance a new plan; only http(s) links are opened; PyQGIS code shown in full with risk warnings and
+  disabled by default; loading local files or databases requires consent; warning when the API key would be
+  sent over http://; built-in workspace ID removed; stability fixes (zoom, algorithm dialog, OpenAI
+  max_completion_tokens, QGIS 3.34–3.36); unit tests and linter configuration.
+  0.3.5 – większe logo EnviroSolutions w stopce / larger EnviroSolutions logo in the footer.
+  0.3.4 – nowe logo wtyczki.
+  0.3.3 – nowa nazwa: GIS Assistant AI.
+  0.3.2 – nowa ikona wtyczki i przycisku „Nowe polecenie”; poprawiona stopka.
+  0.3.1 – katalog wtyczki i paczka ZIP pod nazwą GIS Assistant (gis_assistant).
+  0.3.0 – wersja angielska; język interfejsu i odpowiedzi AI zgodny z ustawieniem języka QGIS.
+  0.2.2 – powrót do pierwotnej kolorystyki (zieleń #4c6e4f) przy zachowaniu nowego układu.
+  0.2.1 – tła i kolory tekstu jak w 0.1; belki sekcji w kolorach dodatkowych marki; logo EnviroSolutions w stopce.
+  0.2.0 – nowa nazwa „GIS Assistant” i logo; wygląd oparty na księdze znaku; zwijane sekcje Polecenie, Wynik, Dziennik; nowa stopka.
+  0.1.4 – uproszczone ustawienia: usunięta sekcja „Parametry” (wartości dobrane automatycznie).
+  0.1.3 – zgodność z nowszymi modelami, które nie przyjmują parametru temperature (automatyczne ponowienie bez niego).
+  0.1.2 – domyślne ID workspace Anthropic dla tej instalacji.
+  0.1.1 – obsługa kluczy Anthropic bez przypisanego workspace (pole „ID workspace”, nagłówek anthropic-workspace-id).
+  0.1.0 – pierwsza wersja: linia poleceń, tryb „narzędzie” i „plan”, wykonywanie planu,
+  kroki interaktywne, automatyczna korekta planu przez AI, ULDK, obsługa Claude/OpenAI/Ollama.
