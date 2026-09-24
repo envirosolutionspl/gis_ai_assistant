@@ -6,7 +6,8 @@ import os
 import re
 from .i18n import N_, tr
 
-# ---------------------------------------------------------------- JSON z odpowiedzi modelu
+# ------------------------- JSON z odpowiedzi modelu
+
 
 def extract_json(text):
     """Wyciąga pierwszy poprawny obiekt JSON z odpowiedzi modelu."""
@@ -61,17 +62,29 @@ def _scan_object(t):
     return None
 
 
-# ---------------------------------------------------------------- usuwanie sekretów
+# --------------------------- usuwanie sekretów
 
-_SECRET = (r"(?:password|passwd|pwd|user|username|login|token|access_token|refresh_token|"
-           r"api[_-]?key|apikey|key|secret|client_secret|signature|sig|authcfg|sessionid|session)")
-LOCAL_PROVIDERS = {"ogr", "gdal", "spatialite", "delimitedtext", "mdal", "pdal", "virtual"}
+_SECRET = (
+    r"(?:password|passwd|pwd|user|username|login|token|access_token|refresh_token|"
+    r"api[_-]?key|apikey|key|secret|client_secret|signature|sig|authcfg|sessionid|session)"
+)
+LOCAL_PROVIDERS = {
+    "ogr",
+    "gdal",
+    "spatialite",
+    "delimitedtext",
+    "mdal",
+    "pdal",
+    "virtual"
+}
 
 
 def sanitize_source(src, provider=""):
-    """Usuwa hasła, tokeny, loginy i pełne ścieżki dyskowe ze źródła warstwy.
+    """
+    Usuwa hasła, tokeny, loginy i pełne ścieżki dyskowe ze źródła warstwy.
 
-    Wynik trafia do kontekstu wysyłanego do modelu AI – nie może zawierać sekretów.
+    Wynik trafia do kontekstu wysyłanego do modelu AI
+    – nie może zawierać sekretów.
     """
     if not src:
         return ""
@@ -122,7 +135,10 @@ def resolve_refs(value, lookup):
         m = REF_RE.fullmatch(value.strip())
         if m:
             return lookup(m.group(1), m.group(2))
-        return REF_RE.sub(lambda mm: str(lookup(mm.group(1), mm.group(2))), value)
+        return REF_RE.sub(
+            lambda mm: str(lookup(mm.group(1), mm.group(2))),
+            value
+        )
     return value
 
 
@@ -139,7 +155,7 @@ def find_refs(value):
     return found
 
 
-# ---------------------------------------------------------------- mini markdown -> HTML
+# ---------- mini markdown -> HTML
 
 def esc(text):
     return html.escape(str(text if text is not None else ""), quote=True)
@@ -160,7 +176,9 @@ def md_to_html(text, link_color="#4c6e4f", code_bg="#eef3ee"):
             if not in_list:
                 out.append("<ul style='margin-top:2px;margin-bottom:2px;'>")
                 in_list = True
-            out.append("<li>%s</li>" % _inline(bullet.group(1), link_color, code_bg))
+            out.append(
+                "<li>%s</li>" % _inline(bullet.group(1), link_color, code_bg)
+            )
             continue
         if in_list:
             out.append("</ul>")
@@ -228,7 +246,10 @@ _PY_RISKS = [
 
 
 def python_risks(code):
-    """Lista kategorii ryzykownych konstrukcji znalezionych w kodzie (proste wyszukiwanie wzorców)."""
+    """
+    Lista kategorii ryzykownych konstrukcji znalezionych w kodzie
+    (proste wyszukiwanie wzorców).
+    """
     found = []
     for pattern, label in _PY_RISKS:
         if re.search(pattern, code or "") and label not in found:
@@ -237,5 +258,8 @@ def python_risks(code):
 
 
 def is_web_url(url):
-    """Tylko http(s) – inne schematy (file:, smb:, ms-settings: …) mogą uruchamiać programy (audyt A4)."""
+    """
+    Tylko http(s) – inne schematy (file:, smb:, ms-settings: …) 
+    mogą uruchamiać programy (audyt A4).
+    """
     return bool(re.match(r"(?i)^https?://[^\s/$.?#][^\s]*$", str(url or "").strip()))

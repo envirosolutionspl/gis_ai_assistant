@@ -7,8 +7,10 @@ chronionej hasłem głównym) albo – na życzenie – tylko do pamięci na cza
 """
 from qgis.core import QgsApplication, QgsMessageLog, QgsSettings, Qgis
 
-from .constants import (DEFAULT_PROVIDER, LLM_MAX_TOKENS, LLM_TIMEOUT_S, LOG_TAG,
-                        OLLAMA_TEMPERATURE, PROVIDERS, SETTINGS_PREFIX)
+from .constants import (
+    DEFAULT_PROVIDER, LLM_MAX_TOKENS, LLM_TIMEOUT_S,
+    LOG_TAG, OLLAMA_TEMPERATURE, PROVIDERS,
+    SETTINGS_PREFIX)
 from .i18n import tr
 
 
@@ -53,11 +55,19 @@ class Settings:
 
     def model(self, provider=None):
         provider = provider or self.provider
-        return self.value("model/" + provider, PROVIDERS[provider]["models"][0], str)
+        return self.value(
+            "model/" + provider,
+            PROVIDERS[provider]["models"][0],
+            str
+        )
 
     def endpoint(self, provider=None):
         provider = provider or self.provider
-        return self.value("endpoint/" + provider, PROVIDERS[provider]["url"], str)
+        return self.value(
+            "endpoint/" + provider,
+            PROVIDERS[provider]["url"],
+            str
+        )
 
     def workspace(self, provider=None):
         """ID workspace Anthropic (wrkspc_…) – identyfikator, nie sekret."""
