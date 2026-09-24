@@ -19,8 +19,16 @@ FALLBACK_LANGUAGE = "en"
 I18N_DIR = os.path.join(os.path.dirname(__file__), "i18n")
 
 LANGUAGE_NAMES = {
-    "pl": "polski", "en": "English", "de": "Deutsch", "uk": "українська", "cs": "čeština",
-    "sk": "slovenčina", "fr": "français", "es": "español", "it": "italiano", "lt": "lietuvių",
+    "pl": "polski",
+    "en": "English",
+    "de": "Deutsch",
+    "uk": "українська",
+    "cs": "čeština",
+    "sk": "slovenčina",
+    "fr": "français",
+    "es": "español",
+    "it": "italiano",
+    "lt": "lietuvių",
 }
 
 _translator = None
